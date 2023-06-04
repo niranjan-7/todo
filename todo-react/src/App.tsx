@@ -1,6 +1,40 @@
 import React from 'react';
+import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 
+
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+  height:100%;
+`
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: #BF4F74;
+`
+const Center = styled.div`
+  padding: 0 35% 0 35%;
+`
+const Button = styled.button<{ $primary?: boolean; }>`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.$primary ? "#BF4F74" : "white"};
+  color: ${props => props.$primary ? "white" : "#BF4F74"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #BF4F74;
+  border-radius: 3px;
+`;
+const Input = styled.input<{ $inputColor?: string; }>`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: ${props => props.$inputColor || "#BF4F74"};
+  background: orange;
+  border: none;
+  border-radius: 3px;
+`;
 function App() {
 
   const [tasks,setTasks] = React.useState([{message:"first task" , id:"sample"}])
@@ -31,25 +65,28 @@ function App() {
     }
   }
   return (
-    <div >  
+    <Wrapper>
+      <Title>Task Application</Title>
+      <Center>
       <>
-        <input value={taskInput} onChange={(e)=>{setTaskInput(e.target.value)}}/>
-        <button onClick={()=>addTask({message:taskInput?taskInput:"default message" , id:small_id})}>Add task</button>
+        <Input value={taskInput} onChange={(e)=>{setTaskInput(e.target.value)}}/>
+        <Button onClick={()=>addTask({message:taskInput?taskInput:"default message" , id:small_id})}>Add task</Button>
       </>
       <ul>
       {tasks.map((task) => <>
         <li key={task.id}>
           <>
-            {taskUpdate && task.id === updateTaskId ?<input value={updateContent?updateContent:task.message} onChange={(e)=>setUpdateContent(e.target.value)} /> :task.message}
+            {taskUpdate && task.id === updateTaskId ?<Input value={updateContent?updateContent:task.message} onChange={(e)=>setUpdateContent(e.target.value)} /> :task.message}
           </>
-          <button key={task.id} onClick={()=>updateTask(task.id,{message:updateContent,id:small_id})}>
+          <Button key={task.id} onClick={()=>updateTask(task.id,{message:updateContent,id:small_id})}>
             Update
-          </button>
-          <button key={task.id} onClick={()=>deleteTask(task.id)}>delete</button>
+          </Button>
+          <Button key={task.id} onClick={()=>deleteTask(task.id)}>delete</Button>
         </li>
       </> )}
       </ul>
-    </div>
+      </Center>
+    </Wrapper>
   );
 }
 
