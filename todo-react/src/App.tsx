@@ -78,7 +78,10 @@ function App() {
           <>
             {taskUpdate && task.id === updateTaskId ?<Input value={updateContent?updateContent:task.message} onChange={(e)=>setUpdateContent(e.target.value)} /> :task.message}
           </>
-          <Button key={task.id} onClick={()=>updateTask(task.id,{message:updateContent,id:small_id})}>
+          <Button key={task.id} onClick={()=>{
+            setUpdateContent(task.message)  
+            updateTask(task.id,{message:updateContent,id:small_id})
+          }}>
             Update
           </Button>
           <Button key={task.id} onClick={()=>deleteTask(task.id)}>delete</Button>
