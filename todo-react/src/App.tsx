@@ -31,7 +31,6 @@ const Input = styled.input<{ $inputColor?: string; }>`
   padding: 0.5em;
   margin: 0.5em;
   color: ${props => props.$inputColor || "#BF4F74"};
-  background: orange;
   border: none;
   border-radius: 3px;
 `;
@@ -70,7 +69,7 @@ function App() {
       <Center>
       <>
         <Input value={taskInput} onChange={(e)=>{setTaskInput(e.target.value)}}/>
-        <Button onClick={()=>addTask({message:taskInput?taskInput:"default message" , id:small_id})}>Add task</Button>
+        <Button $primary onClick={()=>addTask({message:taskInput?taskInput:"default message" , id:small_id})}>Add task</Button>
       </>
       <ul>
       {tasks.map((task) => <>
@@ -78,13 +77,13 @@ function App() {
           <>
             {taskUpdate && task.id === updateTaskId ?<Input value={updateContent?updateContent:task.message} onChange={(e)=>setUpdateContent(e.target.value)} /> :task.message}
           </>
-          <Button key={task.id} onClick={()=>{
+          <Button $primary key={task.id} onClick={()=>{
             setUpdateContent(task.message)  
             updateTask(task.id,{message:updateContent,id:small_id})
           }}>
             Update
           </Button>
-          <Button key={task.id} onClick={()=>deleteTask(task.id)}>delete</Button>
+          <Button $primary key={task.id} onClick={()=>deleteTask(task.id)}>delete</Button>
         </li>
       </> )}
       </ul>
